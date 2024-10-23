@@ -17,7 +17,7 @@
         <nav>
             <ul class="menu">
             <li><a href="construct/cadastro.php">Cadastro</a></li>
-                <li><a href="login/login.php">login</a></li>
+                <li><a href="../login/index.php">login</a></li>
                 <li><a href="servicos.php">Serviços</a></li>
                 <li><a href="sobre.php">Sobre Nós</a></li>
                 <li><a href="contato.php">Contato</a></li>
