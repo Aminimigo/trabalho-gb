@@ -2,26 +2,86 @@
     margin: 0;
     padding: 0;
     font-family: Arial;
+}
+body {
     background: #ffd4f1;
 }
 header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     background: pink;
+    padding: 10px;
+    padding-right: 30px;
     border-bottom: 1px solid #f781e7;
 }
-h1 a {
+/* menu */
+a {
+    text-decoration: none;
+    color: black;
+}
+.title {
+    font-size: 14pt;
+    padding: 10px;
     color: white;
 }
 nav {
     display: flex;
-    background-color: black;
 }
-li{
+.menu {
+    display: flex;
+}
+.menu li {
+    justify-content: end;
+    margin-left: 20px;
+}
+nav ul li a:hover {
+    transition: 0.5s;
+    color: #f781e7;
+}
+/* fim menu */
+
+/* pesquisa  */
+.pesq {
+    background: transparent;
+    font-size: 13pt;
+    border-width: 1px;
+    border-color: white;
+    width: 300px;
+    height: 30px;
+}
+input[type="text"]::placeholder {
+    color: #b84949; 
+}
+.btn {
+    border: none;
+    height: 32px;
+    width: 80px;
+    padding: 3px;
+    background-color: #f781e7;
+    color: #b84949;
+    cursor:                                                                ;
+}
+/* fim pesquisa */
+
+
+li {
     list-style: none;
 }
-a {
-    text-decoration: none;
-    color: black;
+.box {
+    display: flex;
+    justify-content: center;
+    margin-top: 90px;
+}
+.caixa {
+    height: 700px;
+    width: 1000px;
+    box-shadow: 3px 3px 10px black;
+}
+h1 {
+    text-align: center;
+}
+.form {
+    text-align: center;
+    padding-top: 20px;
 }
