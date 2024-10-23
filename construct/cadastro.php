@@ -5,10 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="/CSS/estili-index.css"> <!-- Certifique-se de que o caminho está correto -->
+    <link rel="stylesheet" href="/CSS/cadastro.css"> <!-- Certifique-se de que o caminho está correto -->
 </head>
 <body>
-    <main>
+    <header>
+        <a href="../index.php"><h1>CemFreelas</h1></a>
+        <form action="pesquisa.php" method="GET">
+            <input type="text" name="query" placeholder="Digite sua pesquisa" required>
+            <button type="submit">Pesquisar</button>
+        </form>
+        <nav>
+            <ul class="menu">
+            <li><a href="construct/cadastro.php">Cadastro</a></li>
+                <li><a href="login/login.php">login</a></li>
+                <li><a href="servicos.php">Serviços</a></li>
+                <li><a href="sobre.php">Sobre Nós</a></li>
+                <li><a href="contato.php">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="caixa">
         <h1>Cadastro de Freelancer</h1>
         <form action="salvar-usuario.php" method="POST">
             <label for="codigo">Código:</label>
