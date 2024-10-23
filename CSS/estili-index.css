@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 20;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+
+ body {
+        background-color: #ffd4f1; /* Cor de fundo da página */
+        font-family: Arial, Helvetica, sans-serif;
+} 
+p{
+    color: #000;
+    text-align: left;
+    margin: 20px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: pink;
+    padding: 10px 20px;
+    border-bottom: 1px solid #f781e7;
+}
+
+h1 {
+    font-size: 15pt;
+}
+
+h1 a {
+    text-decoration: none;
+    color: white; /* Cor do texto */
+}
+
+h1 a:hover {
+    color: white; /* Mantém a cor ao passar o mouse */
+}
+
+h1 a:active {
+    color: white; /* Mantém a cor ao clicar */
+}
+
+/* Ícone de hambúrguer para telas pequenas */
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    display: none; /* Oculto em telas grandes */
+    color: white;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: pink;
+    padding: 10px 20px;
+    border-bottom: 1px solid #f781e7;
+}
+
+h1 {
+    font-size: 15pt;
+    color: #000;
+    border: none; 
+    cursor: pointer; 
+    outline: none;
+    background-color: transparent; 
+
+}
+
+header form {
+    flex: 1; /* O formulário ocupa o espaço central */
+    display: flex;
+    justify-content: center; /* Centraliza a barra de pesquisa */
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    margin-right: 10px; 
+    background-color: transparent; 
+    border: 1px solid #ccc; /* Borda clara */
+    color: #000; /* Cor do texto preta */
+    outline: none; /* Remove borda azul padrão */
+}
+
+input[type="text"]::placeholder {
+    color: #b84949; 
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f781e7; /* Cor de fundo rosa */
+    color: rgb(141, 44, 44);
+    border: none; 
+    cursor: pointer; 
+}
+
+button:hover {
+    background-color: #ff66b2; 
+}
+
+nav {
+    margin-right: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px; 
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ec60c9; 
+}
+
+.principal {
+    margin-top: 200px;
+    text-align: center;
+}
