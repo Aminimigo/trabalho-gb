@@ -1,15 +1,20 @@
-class Usuario {
-    private $codigo;
+<?php
+class Cadastro {
+    private $email;
     private $nome;
-    private $servico;
+    private $senha;
+    private $dataNasci;
+    private $sobre;
 
-    public function __construct(int $codigo, string $nome, string $servico) {
-        $this->codigo = $codigo;
+    public function __construct(string $email, string $nome, string $senha, string $dataNasci, string $sobre) {
+        $this->email = $email;
         $this->nome = $nome;
-        $this->servico = $servico;
+        $this->senha = $senha;
+        $this->dataNasci = $dataNasci;
+        $this->sobre = $sobre;
     }
 
     public function mostrarServico(): string {
-        return "O serviço oferecido é: " . $this->servico;
+        return "A pessoa cadastrada é: " . $this->sobre;
     }
 }

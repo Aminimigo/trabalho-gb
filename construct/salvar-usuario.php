@@ -2,11 +2,13 @@
 include 'pessoa.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $codigo = $_POST['codigo'];
+    $email = $_POST['email'];
     $nome = $_POST['nome'];
-    $nascimento = $_POST['nascimento'];
+    $senha = $_POST['senha'];
+    $dataNasci = $_POST['dataNasci'];
+    $sobre = $_POST['sobre'];
 
-    $usuario = new Pessoa($codigo, $nome, $nascimento);
+    $usuario = new Pessoa($email, $nome, $senha, $dataNasci, $sobre);
 
     echo "Usuário cadastrado com sucesso!";
 }

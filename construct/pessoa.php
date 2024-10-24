@@ -1,24 +1,37 @@
 <?php
 class Pessoa {
-    var int $codigo;
+    var string $email;
     var string $nome;
-    var string $nascimento;
-    var int $idade;
+    var string $senha;
+    var string $dataNasci;
+    var string $sobre;
 
-    function __construct(int $codigo, string $nome, string $nascimento) {
-        $this->codigo = $codigo;
+    function __construct(string $email,string $nome,string $senha,string $dataNasci,string $sobre) {
+        $this->setEmail($email);
         $this->setNome($nome);
-        $this->setNascimento($nascimento);
+        $this->setSenha($senha);
+        $this->setDataNasci($dataNasci);
+        $this->setSobre($sobre);
     }
 
-    function setNome(string $nome) {
+    public function setEmail(string $email) {
+        $this->email = $email;
+    }
+
+    public function setNome(string $nome) {
         $this->nome = $nome;
     }
 
-    function setNascimento(string $nascimento) {
-        $this->nascimento = $nascimento;
-        $anoAtual = date("Y");
-        $this->idade = $anoAtual - date('Y', strtotime($nascimento));
+    public function setSenha(string $senha) {
+        $this->senha = $senha;
+    }
+
+    public function setDataNasci(string $dataNasci) {
+        $this->dataNasci = $dataNasci;
+    }
+
+    public function setSobre(string $sobre) {
+        $this->sobre = $sobre;
     }
 }
 ?>
