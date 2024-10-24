@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="/CSS/cadastro.css"> <!-- Certifique-se de que o caminho está correto -->
+    <link rel="stylesheet" href="/CSS/cadastro.css">
 </head>
 <body>
     <header>
@@ -26,32 +26,42 @@
     </header>
     <div class="box">
         <main class="caixa">
-            <h1>Cadastro de Freelancer</h1>
-            <form class="form" action="salvar-usuario.php" method="POST">
-                <label for="codigo">Código:</label>
-                <input type="number" name="codigo" required><br>
+            <div class="centro">
+                <h1>Cadastro de Freelancer</h1>
+                <form class="form" action="salvar-usuario.php" method="POST">
+                    
+                    <label for="email">Email:</label><br>
+                    <input id="email" type="text" placeholder="" name="email" required><br>
+                    
+                    <label for="nome">Nome:</label><br>
+                    <input type="text" name="nome" required><br>
+                    
+                    <label for="senha">Senha:</label><br>
+                    <input type="password" name="senha" required><br>
 
-                <label for="nome">Nome:</label>
-                <input type="text" name="nome" required><br>
+                    <label for="nascimento">Data de Nascimento:</label>
+                    <input class="date" type="date" name="nascimento" required><br>
 
-                <label for="nascimento">Data de Nascimento:</label>
-                <input type="date" name="nascimento" required><br>
-
-                <div class="field">
-                    <label class="label">Você é:</label>
-                    <div class="control">
-                        <div class="select">
-                            <select name="tipo" required>
-                                <option value="">Selecione</option>
-                                <option value="freelancer">Freelancer</option>
-                                <option value="contratante">Contratante</option>
-                            </select>
+                    <div class="field">
+                        <label class="label">Você é:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="tipo" required>
+                                    <option value="" disabled selected hidden>Selecione</option>
+                                    <option value="freelancer">Freelancer</option>
+                                    <option value="contratante">Contratante</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <button type="submit">Cadastrar</button>
-            </form>
+                    <div class="btct">
+                        <button class="buton" type="submit">Cadastrar</button>
+                    </div>
+                    
+                
+                </form>
+            </div>
+            
         </main>
     </div>
     
