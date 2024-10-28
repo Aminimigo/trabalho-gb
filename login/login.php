@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="/CSS/estili-index.css"> <!-- Certifique-se de que o caminho está correto -->
+    <link rel="stylesheet" href="/CSS/estilo.css"> 
 </head>
 <body>
     <main>
