@@ -14,24 +14,19 @@
 <body>
     <header>
         <h1><a href="index.php">CemFreelas</a></h1>
-
-
-        <form action="pesquisa.php" method="GET">
-            <input type="text" name="query" placeholder="Digite sua pesquisa" required>
-            <button type="submit">Pesquisar</button>
-        </form>
         <nav>
             <ul class="menu">
+            <a href="pag_projeto.html" class="botao-publicar-projeto">Publicar Projeto</a>
             <li><a href="construct/cadastro.php">Cadastro</a></li>
                 <li><a href="/login/login.php">login</a></li>
                 <li><a href="#">Serviços</a></li>
                 <li><a href="#">Sobre Nós</a></li>
                 <li><a href="#">Contato</a></li>
+
             </ul>
         </nav>
     </header>
-    
-    <div class="principal">
+    <div class="caixa">
         <p>Bem-vindo ao CemFreelas!
             O lugar certo para quem quer oferecer ou encontrar serviços de qualidade!
 
@@ -42,6 +37,10 @@
             Vem fazer parte dessa rede de gente talentosa e começar a realizar grandes parcerias!
         </p>
     </div>
+    <form action="pesquisa.php" method="GET">
+            <input type="text" name="query" placeholder="Digite sua pesquisa" required>
+            <button type="submit">Pesquisar</button>
+        </form>
 </body>
 
 </html>

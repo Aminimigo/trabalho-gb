@@ -27,7 +27,7 @@
     <div class="box">
         <main class="caixa">
             <div class="centro">
-                <h1>Cadastro de Freelancer</h1>
+                <h1>Cadastro</h1>
                 <form class="form" action="salvar-usuario.php" method="POST">
                     
                     <label for="email">Email:</label><br>

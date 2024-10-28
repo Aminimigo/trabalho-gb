@@ -10,10 +10,14 @@
     background-color: #ffd4f1; /* Cor de fundo da página */
     font-family: Arial, Helvetica, sans-serif;
 } 
-p{
-    color: #000;
-    text-align: left;
+.caixa {
+    border: 2px solid #f9a6e4;  /* Borda verde */
+    padding: 20px;               /* Espaço interno */
+    margin: 20px;                /* Espaço externo */
+    border-radius: 10px;         /* Borda arredondada */
+    background-color: hsl(312, 89%, 93%);   /* Cor de fundo suave */
 }
+
 header {
     display: flex;
     justify-content: space-between;
@@ -128,4 +132,33 @@ nav ul li a:hover {
 .principal {
     margin-top: 200px;
     text-align: center;
+}
+.botao-publicar-projeto {
+    display: inline-block;
+    padding: 15px 30px;
+    color: #fff;                   /* Cor do texto */
+    background-color: #f0a3e0;     /* Cor do fundo */
+    text-decoration: none;         /* Remove o sublinhado */
+    border-radius: 5px;            /* Borda arredondada */
+    font-size: 16px;               /* Tamanho da fonte */
+    font-weight: bold;             /* Negrito */
+    transition: background-color 0.3s ease; /* Efeito de transição */
+}
+
+.botao-publicar-projeto:hover {
+    background-color: #ffc2f8;     /* Cor ao passar o mouse */
+}
+.botao-voltar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.botao-voltar:hover {
+    background-color: #45a049;
 }

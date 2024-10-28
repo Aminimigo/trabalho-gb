@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Projeto</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <h1>Publique seu Projeto</h1>
+        
+        <form action="processar_projeto.php" method="post">
+            <label for="titulo">Título do Projeto</label>
+            <input type="text" id="titulo" name="titulo" required>
+            
+            <label for="descricao">Descrição do Projeto</label>
+            <textarea id="descricao" name="descricao" rows="5" required></textarea>
+            
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" required>
+                <option value="design">Design</option>
+                <option value="desenvolvimento">Desenvolvimento</option>
+                <option value="escrita">Escrita</option>
+                <option value="marketing">Marketing</option>
+                <!-- Adicione mais opções conforme necessário -->
+            </select>
+            
+            <label for="prazo">Prazo para Conclusão</label>
+            <input type="date" id="prazo" name="prazo" required>
+            
+            <label for="orcamento">Orçamento (R$)</label>
+            <input type="number" id="orcamento" name="orcamento" required>
+            
+            <button type="submit">Publicar Projeto</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -5,10 +5,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $nome = $_POST['nome'];
     $senha = $_POST['senha'];
-    $dataNasci = $_POST['dataNasci'];
-    $sobre = $_POST['sobre'];
+    $nascimento = $_POST['nascimento'];
 
-    $usuario = new Pessoa($email, $nome, $senha, $dataNasci, $sobre);
+    $usuario = new Pessoa($email, $nome, $senha, $nascimento);
 
     echo "Usuário cadastrado com sucesso!";
 }

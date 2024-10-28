@@ -4,14 +4,13 @@ class Pessoa {
     var string $nome;
     var string $senha;
     var string $dataNasci;
-    var string $sobre;
 
-    function __construct(string $email,string $nome,string $senha,string $dataNasci,string $sobre) {
+    function __construct(string $email,string $nome,string $senha,string $dataNasci) {
         $this->setEmail($email);
         $this->setNome($nome);
         $this->setSenha($senha);
         $this->setDataNasci($dataNasci);
-        $this->setSobre($sobre);
+    
     }
 
     public function setEmail(string $email) {
@@ -28,10 +27,6 @@ class Pessoa {
 
     public function setDataNasci(string $dataNasci) {
         $this->dataNasci = $dataNasci;
-    }
-
-    public function setSobre(string $sobre) {
-        $this->sobre = $sobre;
     }
 }
 ?>
