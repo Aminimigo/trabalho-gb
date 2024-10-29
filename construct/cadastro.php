@@ -14,6 +14,7 @@
             <input class="pesq" type="text" name="query" placeholder="Digite sua pesquisa" required>
             <button class="btn" type="submit">Pesquisar</button>
         </form>
+        
         <nav>
             <ul class="menu">
                 <li><a href="construct/cadastro.php">Cadastro</a></li>

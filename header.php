@@ -14,7 +14,12 @@
     <header>
         <h1><a href="index.php">CemFreelas</a></h1>
         <nav>
-            <ul class="menu">
+        <div class="menu-hamburguer" id="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="menu-list" id="menu">
                 <li><a href="construct/cadastro.php">Cadastro</a></li>
                 <li><a href="/login/login.php">Login</a></li>
                 <li><a href="#">Serviços</a></li>

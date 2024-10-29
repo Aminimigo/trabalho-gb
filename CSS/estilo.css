@@ -28,7 +28,7 @@ header {
 
 h1 {
     font-size: 15pt;
-    color: #000;
+    color: #000000;
 }
 
 h1 a {
@@ -41,12 +41,26 @@ h1 a:active {
     color: white; /* Mantém a cor ao passar o mouse e ao clicar */
 }
 
-/* Ícone de hambúrguer para telas pequenas */
-.menu-icon {
-    font-size: 24px;
+.menu-hamburguer {
+    display: flex;
+    flex-direction: column;
     cursor: pointer;
-    display: none; /* Oculto em telas grandes */
-    color: white;
+}
+
+.menu-hamburguer
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.nav-list {
+    position: fixed;
+    top:0;
+    left:0;width: 100vw;
+    height: 100vh;
 }
 
 header form {
@@ -96,13 +110,17 @@ nav ul {
 
 nav ul li {
     display: inline;
+    gap: 32px;
+
 }
 
 nav ul li a {
     text-decoration: none;
-    color: black;
+    color: rgb(199, 0, 99);
     transition: color 0.3s;
+
 }
+
 
 nav ul li a:hover {
     color: #ec60c9; 
