@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <h1>Cadastro de Freelancer</h1>
+        <h1>Cadastro</h1>
         <form action="salvar-usuario.php" method="POST">
             <label for="codigo">Código:</label>
             <input type="number" name="codigo" required><br>
