@@ -1,4 +1,50 @@
-<?php include 'header.php'; ?>
+<?php
+session_start();
+
+// Incluir as classes
+include 'header.php';
+include 'db/Database.php';
+include 'db/Mensagem.php';
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_email'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Criar a instância da classe Database
+$database = new Database();
+$conn = $database->getConnection();
+
+// Criar a instância da classe Mensagem
+$mensagem = new Mensagem($conn);
+
+// Variável para armazenar erros
+$erro = '';
+
+// Verificar se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $destinatario = trim($_POST['destinatario']);
+    $mensagemTexto = trim($_POST['mensagem']);
+    $sender_id = $_SESSION['usuario_id']; // ID do usuário logado
+
+    // Verificar se os campos não estão vazios
+    if (empty($destinatario) || empty($mensagemTexto)) {
+        $erro = "O destinatário e a mensagem são obrigatórios!";
+    } else {
+        try {
+            // Enviar a mensagem utilizando o método da classe Mensagem
+            $mensagem->enviarMensagem($sender_id, $destinatario, $mensagemTexto);
+            // Redirecionar após o envio
+            header("Location: sucesso.php");
+            exit();
+        } catch (Exception $e) {
+            $erro = "Erro ao enviar a mensagem: " . $e->getMessage();
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -28,9 +74,8 @@
             margin-bottom: 10px;
         }
 
-        /* Estilo específico para o campo de pesquisa */
         .container-pesquisa input[type="text"] {
-            width: %; /* Largura maior para o campo de pesquisa */
+            width: 100%;
         }
 
         .container-mensagens {
@@ -61,6 +106,13 @@
 <body>
     <div class="container-mensagens">
         <h2>Enviar Mensagem</h2>
+
+        <!-- Exibindo mensagem de erro -->
+        <?php if (!empty($erro)): ?>
+            <p class="error"><?php echo $erro; ?></p>
+        <?php endif; ?>
+
+        <!-- Formulário de envio de mensagem -->
         <form action="enviar_mensagem.php" method="post">
             <label for="destinatario">Destinatário:</label>
             <input type="text" id="destinatario" name="destinatario" required>

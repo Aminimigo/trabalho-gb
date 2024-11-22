@@ -1,71 +1,53 @@
 <?php
-// Configurações de conexão com o banco de dados
-$host = 'localhost'; // ou o nome do seu host
-$dbname = 'login'; // Substitua com o nome do seu banco de dados
-$username = 'root'; // Substitua com seu nome de usuário
-$password = ''; // Substitua com sua senha
-
-try {
-    // Criar uma instância PDO para conectar ao banco de dados
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    
-    // Configurar o PDO para lançar exceções em caso de erro
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Opcional: definir o charset para UTF-8
-    $conn->exec("SET NAMES 'utf8'");
-    
-} catch (PDOException $e) {
-    // Se houver erro na conexão, exibe a mensagem de erro
-    die("Falha na conexão: " . $e->getMessage());
-}
-?>
-
-<?php
-// Iniciar a sessão
 session_start();
+include '../db/DB.php'; // Classe DB para conexão com o banco de dados
 
 // Variável para armazenar erros
 $erro = '';
 
-// Verificar se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obter os dados do formulário
-    $email = trim($_POST['email']);
-    $senha = trim($_POST['password']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-    // Verificar se os campos não estão vazios
+    // Validar se os campos estão preenchidos
     if (empty($email) || empty($senha)) {
-        $erro = "E-mail e senha são obrigatórios!";
+        $erro = "Email e senha são obrigatórios!";
     } else {
-        try {
-            // Aqui usamos a variável $conn corretamente para se referir à conexão PDO
-            $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = :email");
+        // Conectar ao banco de dados
+        $DB = new DB();
+        $conn = $DB->connect();  // Usando o método 'connect', não 'getConnection'
+
+        if ($conn === null) {
+            $erro = "Erro ao conectar ao banco de dados.";
+        } else {
+            // Consultar o banco de dados para verificar se o usuário existe
+            $query = "SELECT * FROM usuarios WHERE email = :email";
+            $stmt = $conn->prepare($query);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
 
-            // Se o e-mail for encontrado no banco de dados
             if ($stmt->rowCount() > 0) {
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                // Comparar diretamente a senha fornecida com a senha no banco de dados
-                if ($senha === $usuario['senha']) {  // Comparação direta
-                    // Armazenar informações do usuário na sessão
+                
+                // Verificar a senha (sem hash para este exemplo)
+                if ($senha == $usuario['senha']) {
+                    // Se a senha estiver correta, armazenar as informações na sessão
                     $_SESSION['usuario_email'] = $usuario['email'];
                     $_SESSION['usuario_id'] = $usuario['id'];
 
-                    // Redirecionar para a página do painel ou dashboard
-                    header("Location: painel.php");
+                    // Redirecionar para o painel de acordo com o tipo de usuário
+                    if ($usuario['tipo_usuario'] == 'cliente') {
+                        header("Location: ../painel/painel_cliente.php");
+                    } elseif ($usuario['tipo_usuario'] == 'freelancer') {
+                        header("Location: ../painel/painel_freelancer.php");
+                    }
                     exit();
                 } else {
                     $erro = "Senha incorreta!";
                 }
             } else {
-                $erro = "E-mail não encontrado!";
+                $erro = "Usuário não encontrado!";
             }
-        } catch (PDOException $e) {
-            // Caso ocorra algum erro na consulta
-            $erro = "Erro ao acessar o banco de dados: " . $e->getMessage();
         }
     }
 }
@@ -75,63 +57,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - CemFreelas</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Login</h2>
-
-        <!-- Exibindo mensagens de erro -->
-        <?php if (!empty($erro)): ?>
-            <p class="error"><?php echo $erro; ?></p>
-        <?php endif; ?>
-
-        <!-- Formulário de login -->
-        <form action="login.php" method="POST">
-            <input type="email" name="email" placeholder="E-mail" required class="input-box">
-            <input type="password" name="password" placeholder="Senha" required class="input-box">
-            <button type="submit" class="button">Entrar</button>
-        </form>
-
-        <!-- Link para cadastro -->
-        <p style="text-align: center; margin-top: 20px;">
-            Ainda não tem uma conta? <a href="cadastro.php">Cadastre-se</a>
-        </p>
-    </div>
-
+    <title>Login</title>
     <style>
-        /* Estilo do fundo da página (gradiente externo) */
+        /* Estilo básico da página */
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #d0e4f4, #f1c6d3); /* Gradiente suave entre azul claro e rosa claro (tons pastéis) */
-            margin: 0;
-            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #A3C8FF, #C7E8FF); /* Gradiente suave de azul claro */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
 
-        /* Estilo da caixa de login (gradiente interno) */
-        .container {
-            background: #ffffff; /* Fundo branco para destacar os elementos */
+        /* Container do formulário de login */
+        .login-container {
+            background: #fff;
             padding: 30px;
-            border-radius: 15px; /* Bordas arredondadas */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombras sutis para sofisticação */
-            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
+            text-align: center;
         }
 
+        /* Título do formulário */
         h2 {
-            font-size: 24px;
+            font-size: 28px;
+            color: #007BFF; /* Azul forte */
             margin-bottom: 20px;
-            color: #6c757d; /* Cor suave para o título */
         }
 
-        .input-box {
+        /* Estilo dos campos de entrada */
+        .input-field {
             width: 100%;
             padding: 12px;
             font-size: 16px;
@@ -140,17 +98,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-bottom: 15px;
             background-color: #f9f9f9;
             color: #333;
+            transition: border-color 0.3s;
         }
 
-        .input-box:focus {
+        .input-field:focus {
+            border-color: #007BFF; /* Foco na borda com cor azul */
             outline: none;
-            border-color: #ffb3c6; /* Foco com uma cor de borda suave */
         }
 
-        .button {
+        /* Botão de envio */
+        .submit-btn {
             width: 100%;
             padding: 12px;
-            background-color: #ffb3c6; /* Cor pastel suave para o botão (rosa claro) */
+            background-color: #007BFF; /* Azul forte */
             color: white;
             font-size: 16px;
             border: none;
@@ -159,31 +119,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: background-color 0.3s, transform 0.2s;
         }
 
-        .button:hover {
-            background-color: #ff80a0; /* Cor mais forte ao passar o mouse */
-            transform: scale(1.05); /* Aumenta ligeiramente o botão */
+        .submit-btn:hover {
+            background-color: #0056b3; /* Cor mais forte no hover */
+            transform: scale(1.05); /* Efeito de aumentar o botão */
         }
 
+        /* Mensagem de erro */
         .error {
             color: red;
             font-size: 14px;
             margin-bottom: 10px;
-            text-align: center;
         }
 
-        p {
+        /* Link para o cadastro */
+        .signup-link {
             margin-top: 20px;
             color: #6c757d; /* Cor suave para o texto */
         }
 
-        a {
-            color: #ff4d94; /* Cor rosa suave para o link */
+        .signup-link a {
+            color: #007BFF; /* Azul forte para o link */
             text-decoration: none;
         }
 
-        a:hover {
+        .signup-link a:hover {
             text-decoration: underline;
         }
     </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+
+        <!-- Exibindo a mensagem de erro, se houver -->
+        <?php if (!empty($erro)): ?>
+            <p class="error"><?php echo $erro; ?></p>
+        <?php endif; ?>
+
+        <!-- Formulário de login -->
+        <form method="POST" action="login.php">
+            <input type="email" name="email" id="email" placeholder="Email" class="input-field" required><br>
+            <input type="password" name="senha" id="senha" placeholder="Senha" class="input-field" required><br>
+            <button type="submit" class="submit-btn">Entrar</button>
+        </form>
+
+        <!-- Link para o cadastro -->
+        <p class="signup-link">
+            Ainda não tem uma conta? <a href="cadastro.php">Cadastre-se</a>
+        </p>
+    </div>
+
 </body>
 </html>
