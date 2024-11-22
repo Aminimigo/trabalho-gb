@@ -1,31 +1,8 @@
-<?php 
-
-// Inclusão dos arquivos de conexão e de usuário
-require_once '../db/DB.php';
-require_once '../db/Usuario.php';
-
-// Conexão com o banco de dados
-$database = new DB();
-$conn = $database->connect();
-
-// Variáveis padrão para usuário não logado
+<?php
+include '../header/header.php';
 $nome_usuario = 'Visitante';
 $foto_perfil = '../img/projetos/fotoperfil.png'; // Foto de perfil padrão
-$usuario_logado = false;
 
-// Verifica se o usuário está logado
-if (isset($_SESSION['usuario_email'])) {
-    $email_usuario = $_SESSION['usuario_email'];
-    $usuario = new Usuario($conn);
-    $usuario_data = $usuario->getUsuarioByEmail($email_usuario);
-
-    if ($usuario_data) {
-        $nome_usuario = $usuario_data['nome'];
-        // Verifica se o usuário tem foto de perfil, senão usa a foto padrão
-        $foto_perfil = !empty($usuario_data['foto_perfil']) ? $usuario_data['foto_perfil'] : $foto_perfil;
-        $usuario_logado = true;
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -44,11 +21,12 @@ if (isset($_SESSION['usuario_email'])) {
         /* Corpo da Página */
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #A3C9FF, #4A76A8);
+            background: linear-gradient(135deg, #A3C9FF, #4A76A8); /* Gradiente suave de azul */
             color: #333;
             min-height: 100vh;
         }
 
+        /* Layout principal */
         .main-content {
             padding: 40px 20px;
         }
@@ -70,6 +48,7 @@ if (isset($_SESSION['usuario_email'])) {
             align-items: center;
         }
 
+        /* Estilo da imagem de perfil circular */
         .profile-pic {
             border-radius: 50%;
             width: 100px;
@@ -89,6 +68,7 @@ if (isset($_SESSION['usuario_email'])) {
             color: #333;
         }
 
+        /* Cards explicativos */
         .how-it-work-cards {
             display: flex;
             justify-content: space-between;
@@ -130,6 +110,7 @@ if (isset($_SESSION['usuario_email'])) {
             color: #666;
         }
 
+        /* Container com o texto adicional */
         .extra-container {
             background-color: #fff;
             padding: 20px;
@@ -144,6 +125,25 @@ if (isset($_SESSION['usuario_email'])) {
             color: #555;
         }
 
+        /* Menu Responsivo */
+        .nav-links {
+            display: none;
+            width: 100%;
+            background-color: #D8A6D1;
+            padding: 10px 0;
+        }
+
+        .nav-links li {
+            display: block;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        /* Responsividade */
         @media (max-width: 768px) {
             .how-it-work-cards {
                 flex-direction: column;
@@ -166,6 +166,12 @@ if (isset($_SESSION['usuario_email'])) {
                 padding: 10px 0;
             }
 
+            .nav-links li {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+
             .nav-links.active {
                 display: block;
             }
@@ -173,7 +179,8 @@ if (isset($_SESSION['usuario_email'])) {
     </style>
 </head>
 <body>
-<?php include '../header/header.php' ?>
+
+<!-- Conteúdo Principal -->
 <main class="main-content">
     <div class="container">
         <section class="welcome-section">
@@ -186,6 +193,7 @@ if (isset($_SESSION['usuario_email'])) {
             </div>
         </section>
 
+        <!-- Container com o texto adicional -->
         <div class="extra-container">
             <p>Bem-vindo ao CemFreelas, a plataforma que conecta freelancers talentosos e clientes em busca de soluções criativas. Encontre o profissional ideal para seu projeto ou publique suas oportunidades para conquistar novos desafios. Cadastre-se agora e comece a explorar as melhores opções para seu trabalho ou projeto!</p>
         </div>
@@ -208,7 +216,8 @@ if (isset($_SESSION['usuario_email'])) {
                 <p class="card-description">Nós garantimos que o pagamento seja seguro e que ambas as partes fiquem satisfeitas.</p>
             </div>
         </section>
-    </div>
+
+     </div>
 
     <?php include '../header/footer.php'; ?>
 </main>
