@@ -17,7 +17,7 @@ $query = isset($_GET['query']) ? $_GET['query'] : '';
 // Verificar se o usuário está logado
 $usuario_nome = 'Visitante';
 if (isset($_SESSION['usuario_email'])) {
-    $usuario_email = $_SESSION['usuario_email'];
+    $usuario_email = $_SESSION['usuario_    email'];
     $usuario = new Usuario($conn);
     $usuario_nome = $usuario->obterNomePorEmail($usuario_email);
 }

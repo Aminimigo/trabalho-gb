@@ -1,7 +1,10 @@
-<?php 
-// Verifica se o usuário está logado e recupera as informações da sessão
-$usuario_logado = isset($_SESSION['nome']) && !empty($_SESSION['nome']);
-$nome_usuario = $usuario_logado ? $_SESSION['nome'] : 'Visitante';
+<?php
+// Verifica se a sessão já foi iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Verificar se o usuário está logado
+$logado = isset($_SESSION['usuario_email']); // Define variável para facilitar a verificação
 ?>
 
 <!DOCTYPE html>
@@ -10,157 +13,177 @@ $nome_usuario = $usuario_logado ? $_SESSION['nome'] : 'Visitante';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel - CemFreelas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        /* Estilos do cabeçalho */
-        header {
-            background: linear-gradient(135deg, #4a6fa5, #a8d0e6);
-            color: white;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da Página */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #A3C9FF, #4A76A8);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Estilo para o menu */
+        .navbar {
+            background-color: #6A4C9C;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            box-sizing: border-box;
+            flex-wrap: wrap;
         }
 
-        .logo h1 {
+        .navbar .logo {
             font-size: 24px;
-            margin: 0;
-        }
-
-        .logo a {
-            text-decoration: none;
             color: white;
+            font-weight: bold;
         }
 
-        .barra-pesquisa {
+        /* Barra de Pesquisa */
+        .search-bar {
+            flex-grow: 1;
+            max-width: 400px;
             display: flex;
-            align-items: center;
-            background-color: white;
-            padding: 5px;
-            border-radius: 20px;
-            max-width: 300px;
-            width: 100%;
+            margin-left: 20px;
         }
 
-        .barra-pesquisa input {
+        .search-bar input {
             width: 100%;
-            padding: 5px;
+            padding: 8px;
+            border-radius: 20px;
             border: none;
             outline: none;
+            font-size: 16px;
         }
 
-        .barra-pesquisa button {
-            background-color: #4a6fa5;
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: #D8A6D1;
             color: white;
-            padding: 5px 10px;
-            border: none;
             border-radius: 20px;
+            border: none;
             cursor: pointer;
         }
 
-        /* Menu Hambúrguer */
-        .menu-burger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-burger span {
-            background: white;
-            height: 3px;
-            margin: 4px 0;
-            width: 25px;
-        }
-
-        .nav-menu {
+        /* Menu de navegação */
+        .nav-links {
             display: flex;
             gap: 20px;
         }
 
-        .nav-menu a {
+        .nav-links a {
             color: white;
             text-decoration: none;
             font-size: 18px;
         }
 
-        .nav-menu a:hover {
-            text-decoration: underline;
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
         }
 
-        /* Responsividade */
-        @media screen and (max-width: 768px) {
-            .nav-menu {
+        .hamburger-menu div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+        }
+
+        /* Estilo do menu quando estiver ativo (visível em dispositivos móveis) */
+        .nav-links.active {
+            display: block;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background-color: #6A4C9C;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
                 display: none;
+                width: 100%;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .navbar {
                 flex-direction: column;
-                background-color: #4a6fa5;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                width: 200px;
-                padding: 10px;
-                border-radius: 5px;
+                align-items: flex-start;
             }
 
-            .nav-menu.active {
-                display: flex;
+            .search-bar {
+                margin-top: 10px;
+                width: 100%;
+                margin-left: 0;
             }
 
-            .menu-burger {
-                display: flex;
+            .nav-links a {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-<header>
-    <div class="logo">
-        <a href="../painel/painel.php"><h1>CemFreelas</h1></a>
-    </div>
 
-    <form action="../login/pesquisar.php" method="get" class="barra-pesquisa">
-        <input type="text" name="query" placeholder="Buscar...">
-        <button type="submit">Pesquisar</button>
-    </form>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">CemFreelas</div>
 
-    <!-- Menu Hambúrguer -->
-    <div class="menu-burger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+        <!-- Barra de Pesquisa -->
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar...">
+            <button>Pesquisar</button>
+        </div>
 
-    <!-- Menu de Navegação -->
-    <nav class="nav-menu">
-        <a href="../painel/painel.php">Home</a>
-        <a href="../header/sobre.php">Sobre</a>
-        <a href="../header/contato.php">Contato</a>
-        <a href="../projeto/projetos.php">Projetos</a>
-        <?php if ($usuario_logado): ?>
-            <a href="../header/perfil.php">Perfil</a>
-            <a href="../projeto/meus_projetos.php">Meus Projetos</a>
-            <a href="../projeto/postar_projeto.php">Postar Projeto</a>
-            <a href="../header/logout.php">Logout</a>
-        <?php endif; ?>
-    </nav>
+        <!-- Menu de Navegação -->
+        <div class="nav-links">
+            <a href="/../header/sobre.php">Sobre</a>
+            <a href="/../header/contato.php">Contato</a>
 
-    <!-- Informações do Usuário -->
-    <div class="usuario-info">
-        <?php if ($usuario_logado): ?>
-            <span>Olá, <?php echo htmlspecialchars($nome_usuario); ?>!</span>
-        <?php else: ?>
-            <a href="../login/login.php" class="button is-light">Login</a>
-            <a href="../header/cadastro.php" class="button is-light">Cadastro</a>
-        <?php endif; ?>
-    </div>
-</header>
+            <!-- Exibir "Login" ou "Perfil", dependendo do status do usuário -->
+            <?php if (!$logado): ?>
+                <a href="/../login/login.php">Login</a>
+            <?php else: ?>
+                <a href="../perfil/perfil.php">Perfil</a>
+                <a href="../projeto/meus_projetos.php">Meus Projetos</a>
+                <a href="postar_projeto.php">Postar Projeto</a>
+                <a href="/../header/logout.php">Logout</a>
+            <?php endif; ?>
+        </div>
 
-<script>
-    function toggleMenu() {
-        const navMenu = document.querySelector('.nav-menu');
-        navMenu.classList.toggle('active');
-    }
-</script>
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <!-- Conteúdo da Página -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Seu conteúdo aqui -->
+        </div>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+
 </body>
 </html>

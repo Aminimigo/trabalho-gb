@@ -1,5 +1,10 @@
-<?php 
-// Incluir classes
+<?php
+// Verifica se a sessão já foi iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Inclusão dos arquivos de conexão e de usuário
 require_once '../db/DB.php';
 require_once '../db/Usuario.php';
 
@@ -10,9 +15,8 @@ $conn = $database->connect();
 // Variáveis padrão para usuário não logado
 $nome_usuario = 'Visitante';
 $foto_perfil = '../img/projetos/fotoperfil.png'; // Foto de perfil padrão
-$usuario_logado = false;
 
-// Se o usuário estiver logado
+// Verifica se o usuário está logado
 if (isset($_SESSION['usuario_email'])) {
     $email_usuario = $_SESSION['usuario_email'];
     $usuario = new Usuario($conn);
@@ -20,8 +24,8 @@ if (isset($_SESSION['usuario_email'])) {
 
     if ($usuario_data) {
         $nome_usuario = $usuario_data['nome'];
+        // Verifica se o usuário tem foto de perfil, senão usa a foto padrão
         $foto_perfil = !empty($usuario_data['foto_perfil']) ? $usuario_data['foto_perfil'] : $foto_perfil;
-        $usuario_logado = true;
     }
 }
 ?>
@@ -33,6 +37,7 @@ if (isset($_SESSION['usuario_email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel - CemFreelas</title>
     <style>
+        /* CSS mantido exatamente como você forneceu */
         * {
             margin: 0;
             padding: 0;
@@ -171,7 +176,7 @@ if (isset($_SESSION['usuario_email'])) {
     </style>
 </head>
 <body>
-
+<?php include '../header/header.php'; ?>
 <main class="main-content">
     <div class="container">
         <section class="welcome-section">

@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Link para o cadastro -->
         <p class="signup-link">
-            Ainda não tem uma conta? <a href="cadastro.php">Cadastre-se</a>
+            Ainda não tem uma conta? <a href="/../header/cadastro.php">Cadastre-se</a>
         </p>
     </div>
 

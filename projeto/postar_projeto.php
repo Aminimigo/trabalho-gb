@@ -14,9 +14,8 @@ include('../db/projeto.php');
 $database = new DB();
 $conn = $database->connect();  // Use 'connect()' em vez de 'getConnection()'
 
-
-// Criar uma instância da classe Project
-$projeto = new projeto($conn);
+// Criar uma instância da classe Projeto
+$projeto = new Projeto($conn);
 
 // Processamento do formulário
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -26,9 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $valor = htmlspecialchars($_POST['valor']);
     $foto = ''; // Variável para armazenar o caminho da foto
 
+    // Converter o valor para formato numérico (remover ponto e transformar em float)
+    $valor = floatval(str_replace('.', '', $valor)); // Remover pontos e converter para float
+
     // Lógica de upload de imagem
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = 'uploads/'; // Pasta para salvar as imagens
+        $uploadDir = '../perfil/uploads/'; // Pasta para salvar as imagens
         $uploadFile = $uploadDir . basename($_FILES['foto']['name']);
 
         // Mover o arquivo enviado para o diretório especificado
@@ -39,8 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Inserir o novo projeto no banco de dados
-    if ($project->createProject($nome_produto, $descricao, $valor, $_SESSION['usuario_email'], $foto)) {
+    if ($projeto->createProject($nome_produto, $descricao, $valor, $_SESSION['usuario_email'], $foto)) {
         // Redirecionar para "Meus Projetos" após o envio
         header("Location: meus_projetos.php");
         exit;
@@ -48,6 +49,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<p>Erro ao inserir o projeto.</p>";
     }
 }
+
+    // Verificar se o usuário existe no banco de dados usando o email
+    $query = "SELECT email FROM usuarios WHERE email = :email";  // Alterado para usar o 'email'
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':email', $_SESSION['usuario_email']);
+    $stmt->execute();
+
+    // Verificar se o usuário foi encontrado
+    if ($stmt->rowCount() > 0) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $usuario_email = $user['email'];  // Agora estamos utilizando o email
+
+        // Inserir o novo projeto no banco de dados
+        if ($projeto->createProject($nome_produto, $descricao, $valor, $usuario_email, $foto)) {
+            // Redirecionar para "Meus Projetos" após o envio
+            header("Location: meus_projetos.php");
+            exit;
+        } else {
+            echo "<p>Erro ao inserir o projeto.</p>";
+        }
+    } else {
+        echo "<p>Usuário não encontrado.</p>";
+    }
+
 ?>
 
 <!DOCTYPE html>

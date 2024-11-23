@@ -10,11 +10,14 @@ if (!isset($_SESSION['usuario_email'])) {
 }
 
 try {
-    // Corrigir a instância da classe DB
+    // Instância da classe DB e conexão
     $database = new DB();
     $conn = $database->connect();
 
+    // Instanciando a classe Projeto
     $projeto = new Projeto($conn);
+    
+    // Buscando projetos do usuário logado
     $projetos = $projeto->getProjetosPorUsuario($_SESSION['usuario_email']);
 } catch (PDOException $e) {
     echo "Erro: " . $e->getMessage();
