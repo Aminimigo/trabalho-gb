@@ -51,15 +51,16 @@ CREATE TABLE IF NOT EXISTS `projetos` (
   `projeto_id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_produto` varchar(50) NOT NULL,
   `descricao` text NOT NULL,
-  `usuario_email` varchar(50) NOT NULL,
+  `usuario_email` varchar(255) DEFAULT NULL,
   `data_criacao` timestamp NULL DEFAULT current_timestamp(),
-  `valor` decimal(10,2) NOT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
   `foto` varchar(50) NOT NULL,
-  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`projeto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela login.projetos: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela login.projetos: ~1 rows (aproximadamente)
+INSERT INTO `projetos` (`projeto_id`, `nome_produto`, `descricao`, `usuario_email`, `data_criacao`, `valor`, `foto`) VALUES
+	(1, 'Banana', 'banana', 'annachristina0500@gmail.com', '2024-11-23 23:18:24', 1000000.00, '../perfil/uploads/bananaazul.jpeg');
 
 -- Copiando estrutura para tabela login.senhaa
 CREATE TABLE IF NOT EXISTS `senhaa` (
