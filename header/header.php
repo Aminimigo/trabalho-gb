@@ -1,7 +1,5 @@
-<?php 
-// Verifica se o usuário está logado e recupera as informações da sessão
-$usuario_logado = isset($_SESSION['nome']) && !empty($_SESSION['nome']);
-$nome_usuario = $usuario_logado ? $_SESSION['nome'] : 'Visitante';
+<?php
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -144,30 +142,33 @@ $nome_usuario = $usuario_logado ? $_SESSION['nome'] : 'Visitante';
             <button>Pesquisar</button>
         </div>
 
-    <!-- Menu de Navegação -->
-    <nav class="nav-menu">
-        <a href="../painel/painel.php">Home</a>
-        <a href="../header/sobre.php">Sobre</a>
-        <a href="../header/contato.php">Contato</a>
-        <a href="../projeto/projetos.php">Projetos</a>
-        <?php if ($usuario_logado): ?>
-            <a href="../header/perfil.php">Perfil</a>
-            <a href="../projeto/meus_projetos.php">Meus Projetos</a>
-            <a href="../projeto/postar_projeto.php">Postar Projeto</a>
-            <a href="../header/logout.php">Logout</a>
-        <?php endif; ?>
-    </nav>
+        <!-- Menu de Navegação -->
+        <div class="nav-links">
+            <a href="home.php">Home</a>
+            <a href="sobre.php">Sobre</a>
+            <a href="contato.php">Contato</a>
+            <?php if (isset($_SESSION['usuario_email'])) { ?>
+                <a href="perfil.php">Perfil</a>
+                <a href="meus_projetos.php">Meus Projetos</a>
+                <a href="postar_projeto.php">Postar Projeto</a>
+                <a href="../header/logout.php">Logout</a>
+            <?php } ?>
+        </div>
 
-    <!-- Informações do Usuário -->
-    <div class="usuario-info">
-        <?php if ($usuario_logado): ?>
-            <span>Olá, <?php echo htmlspecialchars($nome_usuario); ?>!</span>
-        <?php else: ?>
-            <a href="../login/login.php" class="button is-light">Login</a>
-            <a href="../header/cadastro.php" class="button is-light">Cadastro</a>
-        <?php endif; ?>
-    </div>
-</header>
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <!-- Conteúdo da Página -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Seu conteúdo aqui -->
+        </div>
+    </main>
 
     <script>
         function toggleMenu() {
