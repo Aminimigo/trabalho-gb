@@ -1,10 +1,7 @@
-<?php
-// Verifica se a sessão já foi iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-// Verificar se o usuário está logado
-$logado = isset($_SESSION['usuario_email']); // Define variável para facilitar a verificação
+<?php 
+// Verifica se o usuário está logado e recupera as informações da sessão
+$usuario_logado = isset($_SESSION['nome']) && !empty($_SESSION['nome']);
+$nome_usuario = $usuario_logado ? $_SESSION['nome'] : 'Visitante';
 ?>
 
 <!DOCTYPE html>
@@ -147,36 +144,30 @@ $logado = isset($_SESSION['usuario_email']); // Define variável para facilitar 
             <button>Pesquisar</button>
         </div>
 
-        <!-- Menu de Navegação -->
-        <div class="nav-links">
-            <a href="/../header/sobre.php">Sobre</a>
-            <a href="/../header/contato.php">Contato</a>
+    <!-- Menu de Navegação -->
+    <nav class="nav-menu">
+        <a href="../painel/painel.php">Home</a>
+        <a href="../header/sobre.php">Sobre</a>
+        <a href="../header/contato.php">Contato</a>
+        <a href="../projeto/projetos.php">Projetos</a>
+        <?php if ($usuario_logado): ?>
+            <a href="../header/perfil.php">Perfil</a>
+            <a href="../projeto/meus_projetos.php">Meus Projetos</a>
+            <a href="../projeto/postar_projeto.php">Postar Projeto</a>
+            <a href="../header/logout.php">Logout</a>
+        <?php endif; ?>
+    </nav>
 
-            <!-- Exibir "Login" ou "Perfil", dependendo do status do usuário -->
-            <?php if (!$logado): ?>
-                <a href="/../login/login.php">Login</a>
-            <?php else: ?>
-                <a href="../perfil/perfil.php">Perfil</a>
-                <a href="../projeto/meus_projetos.php">Meus Projetos</a>
-                <a href="postar_projeto.php">Postar Projeto</a>
-                <a href="/../header/logout.php">Logout</a>
-            <?php endif; ?>
-        </div>
-
-        <!-- Hamburger Menu -->
-        <div class="hamburger-menu" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </header>
-
-    <!-- Conteúdo da Página -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Seu conteúdo aqui -->
-        </div>
-    </main>
+    <!-- Informações do Usuário -->
+    <div class="usuario-info">
+        <?php if ($usuario_logado): ?>
+            <span>Olá, <?php echo htmlspecialchars($nome_usuario); ?>!</span>
+        <?php else: ?>
+            <a href="../login/login.php" class="button is-light">Login</a>
+            <a href="../header/cadastro.php" class="button is-light">Cadastro</a>
+        <?php endif; ?>
+    </div>
+</header>
 
     <script>
         function toggleMenu() {

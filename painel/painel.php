@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -226,7 +230,42 @@
 </head>
 <body>
 
-<?php include '../header/header.php'?>   
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">CemFreelas</div>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar...">
+            <button>Pesquisar</button>
+        </div>
+
+        <!-- Menu de Navegação -->
+        <div class="nav-links">
+            <a href="painel.php">Home</a>
+            <a href="..sobre.php">Sobre</a>
+            <a href="contato.php">Contato</a>
+            <a href="projetos.php">Projetos</a>
+
+            <!-- Exibe Login ou perfil dependendo do estado de login -->
+            <?php if (isset($_SESSION['usuario_email'])) { ?>
+                <a href="perfil.php">Perfil</a>
+                <a href="meus_projetos.php">Meus Projetos</a>
+                <a href="postar_projeto.php">Postar Projeto</a>
+                <a href="logout.php">Logout</a>
+            <?php } else { ?>
+                <a href="../login/login.php">Login</a>
+            <?php } ?>
+        </div>
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
     <!-- Conteúdo da Página -->
     <main class="main-content">
         <div class="container">
